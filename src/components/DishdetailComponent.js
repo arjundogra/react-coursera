@@ -32,23 +32,26 @@ class DishDetail extends Component {
             let comments = dish.comments;
             console.log(comments[0].comment)
             return(
-                <ul className="list-unstyled">
-                <li>{comments[0].comment}</li>
-                <li className="list-inline-item">--{comments[0].author}</li>
-                <li className="list-inline-item">{comments[0].date}</li>
-                <li>{comments[1].comment}</li>
-                <li className="list-inline-item">--{comments[1].author}</li>
-                <li className="list-inline-item">{comments[1].date}</li>
-                <li>{comments[2].comment}</li>
-                <li className="list-inline-item">--{comments[2].author}</li>
-                <li className="list-inline-item">{comments[2].date}</li>
-                <li>{comments[3].comment}</li>
-                <li className="list-inline-item">--{comments[3].author}</li>
-                <li className="list-inline-item">{comments[3].date}</li>
-                <li>{comments[4].comment}</li>
-                <li className="list-inline-item">--{comments[4].author}</li>
-                <li className="list-inline-item">{comments[4].date}</li>
-                </ul>
+                <div className="col-md-5 col-12 m-1">
+                    <h4>Comments</h4>
+                    <ul className="list-unstyled">
+                        <p>{comments[0].comment}</p>
+                        <p className="list-inline-item">--{comments[0].author}</p>
+                        <p className="list-inline-item">{comments[0].date}</p>
+                        <p>{comments[1].comment}</p>
+                        <p className="list-inline-item">--{comments[1].author}</p>
+                        <p className="list-inline-item">{comments[1].date}</p>
+                        <p>{comments[2].comment}</p>
+                        <p className="list-inline-item">--{comments[2].author}</p>
+                        <p className="list-inline-item">{comments[2].date}</p>
+                        <p>{comments[3].comment}</p>
+                        <p className="list-inline-item">--{comments[3].author}</p>
+                        <p className="list-inline-item">{comments[3].date}</p>
+                        <p>{comments[4].comment}</p>
+                        <p className="list-inline-item">--{comments[4].author}</p>
+                        <p className="list-inline-item">{comments[4].date}</p>
+                    </ul>
+                </div>
             )
         }
         else{
@@ -65,10 +68,7 @@ class DishDetail extends Component {
                     <div className="col-md-5 col-12 m-1">
                         {this.renderDish(this.props.dishh)}
                     </div>
-                    <div className="col-md-5 col-12 m-1">
-                        <h4>Comments</h4>
-                        {this.renderComments(this.props.dishh)}
-                    </div>
+                    {this.renderComments(this.props.dishh)}
                 </div>
             );
     }
