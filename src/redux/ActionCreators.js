@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import { DISHES } from '../shared/dishes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const addComment = (comment) => ({
@@ -145,3 +144,89 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const fetchLeaders = () => (dispatch) => {
+
+    dispatch(LeadersLoading(true));
+
+    return fetch(baseUrl + 'leaders')
+      .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+          }
+        },
+        error => {
+              var errmess = new Error(error.message);
+              throw errmess;
+        })
+      .then(res => res.json())  
+      .then(leaders => dispatch(addLeaders(leaders)))
+      .catch(error => dispatch(LeadersFailed(error.message)));
+}
+
+export const LeadersLoading = () => ({
+  type: ActionTypes.LEADERS_LOADING
+});
+
+export const LeadersFailed = (errmess) => ({
+  type: ActionTypes.LEADERS_FAILED,
+  payload: errmess
+});
+
+export const addLeaders = (leaders) => ({
+  type: ActionTypes.ADD_LEADERS,
+  payload: leaders
+});
+
+export const postFeedback = (firstname,
+  lastname,
+  telnum,
+  email,
+  agree,
+  contactType,
+  message) => (dispatch) => {
+  console.log(dispatch)
+  const feedbackData = {
+    firstname: firstname,
+    lastname: lastname,
+    telnum: telnum,
+    email: email,
+    agree: agree,
+    contactType: contactType,
+    message: message
+  }
+  return fetch(baseUrl + "feedback",{
+    method: "POST",
+    body: JSON.stringify(feedbackData),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+})
+.then(
+  response => {
+    if (response.ok) {
+      return response;
+    } else {
+      var error = new Error(
+        "Error " + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    }
+  },
+  error => {
+    throw error;
+  }
+)
+.then(res=>res.json())
+.then(res2=> alert('Current State is: ' + JSON.stringify(res2)))
+.catch(error => {
+  console.log("post feedbacks", error.message);
+  alert("Your feedback could not be posted\nError: " + error.message);
+});
+}
